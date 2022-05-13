@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres1234
+    volumes:
+      - ./pgdata:/var/lib/posgresql/data
+  web:
+    tty: true
+    build: .
+    ports:
+      - "8000:7777"
+    volumes:
+      - .:/app
+    command: python manage.py runserver 0.0.0.0:7777
+    depends_on:
+      - db
